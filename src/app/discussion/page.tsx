@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { MessageSquare, ThumbsUp, Flag, Reply, User, Search } from 'lucide-react';
+import { ThumbsUp, Flag, Reply, User, Search } from 'lucide-react';
 
 const DiscussionTemplate = () => {
     const [comment, setComment] = useState('');

@@ -1,12 +1,11 @@
 'use client'
-import { useState } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, Share2, Bookmark } from 'lucide-react';
 import Link from 'next/link';
+import { use } from 'react';
 
-const ChapterTemplate:React.FC<{params:{id:string}}> = ({params}) => {
-    const id = params.id
-    const [currentPage, setCurrentPage] = useState(id);
+const ChapterTemplate:React.FC<{params:Promise<{id:string}>}> = ({params}) => {
   
+  const currentPage = Number(use(params).id)
   // Example chapter data
   const chapter = {
     number: 1,
@@ -31,7 +30,7 @@ const ChapterTemplate:React.FC<{params:{id:string}}> = ({params}) => {
           <BookOpen className="text-stone-600" size={24} />
           <div>
             <h2 className="text-xl font-serif text-stone-800">Chapter {chapter.number}</h2>
-            <p className="text-sm text-stone-500">Page {id} of {chapter.pages}</p>
+            <p className="text-sm text-stone-500">Page {currentPage} of {chapter.pages}</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
@@ -73,7 +72,7 @@ const ChapterTemplate:React.FC<{params:{id:string}}> = ({params}) => {
         {/* Page Navigation */}
         <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center border-t bg-white">
           <Link 
-            href={id == '1'? "/table-content":`/chapters/${Number(id)-1}`}
+            href={currentPage == 1? "/table-content":`/chapters/${Number(currentPage)-1}`}
             className="flex items-center space-x-2 px-4 py-2 text-stone-600 hover:bg-stone-100 rounded-lg"
           >
             <ChevronLeft size={20} />
@@ -85,7 +84,7 @@ const ChapterTemplate:React.FC<{params:{id:string}}> = ({params}) => {
           </div>
 
           <Link
-            href={id != '24'? `/chapters/${id+1}`:"/table-content"}
+            href={currentPage != 24? `/chapters/${currentPage+1}`:"/table-content"}
             className="flex items-center space-x-2 px-4 py-2 text-stone-600 hover:bg-stone-100 rounded-lg"
           >
             <span>Next Page</span>
